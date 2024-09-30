@@ -1,0 +1,79 @@
+# Игнорировать папки сборки
+bin/
+obj/
+out/
+
+# Игнорировать артефакты публикации
+publish/
+*.publishsettings
+
+# Игнорировать файлы конфигурации среды разработки
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Игнорировать кэш и файлы временных данных Visual Studio
+.vscode/
+.idea/
+.vs/
+.vscode/
+*.vs/
+*.tlog
+*.log
+*.pdb
+*.cache
+*.opendb
+
+# Игнорировать файлы пакетов NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+NuGet.Config
+NuGet.exe
+NuGetScratch/
+
+# Игнорировать артефакты NuGet восстановления
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Игнорировать временные и кэшированные файлы
+*.tmp
+*.temp
+*.diff
+*.patch
+
+# Игнорировать файлы отладочной информации
+*.pdb
+*.mdb
+*.ilk
+
+# Игнорировать файлы, связанные с тестированием и отчетами
+TestResults/
+*.coverage
+*.coveragexml
+*.trx
+*.testsettings
+*.vsmdi
+*.tss
+
+# Игнорировать файлы для публикации
+appsettings.Production.json
+appsettings.Development.json
+appsettings.Staging.json
+appsettings.Local.json
+
+# Игнорировать файлы Azure
+local.settings.json
+AzureFunctionAppLogs/
+
+# Игнорировать пользовательские файлы и файлы настроек IDE (ReSharper, Rider и др.)
+_ReSharper*/
+*.DotSettings.user
+.idea/
+
+# Игнорировать файлы ОС
+.DS_Store
+Thumbs.db
