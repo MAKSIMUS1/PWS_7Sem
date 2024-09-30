@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST API Demo</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>REST API Demo</h1>
+
+    <button id="get">GET</button>
+    <button id="post">POST (Set RESULT)</button>
+    <button id="put">PUT (Push to Stack)</button>
+    <button id="delete">DELETE (Pop from Stack)</button>
+
+    <div id="output"></div>
+
+    <script>
+        const apiUrl = 'http://192.168.56.1:63042/api/result';
+
+        $('#get').click(function() {
+            $.ajax({
+                url: apiUrl,
+                method: 'GET',
+                success: function(data) {
+                    $('#output').html(JSON.stringify(data));
+                }
+            });
+        });
+
+        $('#post').click(function () {
+            const newResult = prompt("Enter new RESULT value:");
+
+            if (newResult !== null && newResult !== "") {
+                $.ajax({
+                    url: apiUrl,
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ RESULT: parseInt(newResult) }),
+                    success: function (data) {
+                        $('#output').html(JSON.stringify(data));
+                    },
+                    error: function (xhr) {
+                        $('#output').html('Error: ' + xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Please enter a valid number.");
+            }
+        });
+
+
+        $('#put').click(function () {
+            const addValue = prompt("Enter value to ADD to the stack:");
+
+            if (addValue !== null && addValue !== "") {
+                $.ajax({
+                    url: apiUrl,
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ ADD: parseInt(addValue) }),
+                    success: function (data) {
+                        $('#output').html(JSON.stringify(data));
+                    },
+                    error: function (xhr) {
+                        $('#output').html('Error: ' + xhr.responseText);
+                    }
+                });
+            } else {
+                alert("Please enter a valid number.");
+            }
+        });
+
+
+        $('#delete').click(function() {
+            $.ajax({
+                url: apiUrl,
+                method: 'DELETE',
+                success: function(data) {
+                    $('#output').html(JSON.stringify(data));
+                }
+            });
+        });
+    </script>
+</body>
+</html>

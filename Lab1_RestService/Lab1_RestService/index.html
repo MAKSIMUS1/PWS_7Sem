@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST Service Demo</title>
+    <script>
+        function sendRequest(method, url, params = null) {
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        document.getElementById('response').innerText = 'Response: ' + xhr.responseText;
+                    } else {
+                        document.getElementById('response').innerText = 'Error: ' + xhr.status;
+                    }
+                }
+            };
+
+            xhr.send(params);
+        }
+
+        function handleGet() {
+            sendRequest('GET', 'http://192.168.56.1:50210/index.KMO');
+        }
+
+        function handlePost() {
+            const result = document.getElementById('postResult').value;
+            sendRequest('POST', 'http://192.168.56.1:50210/index.KMO', 'RESULT=' + result);
+        }
+
+        function handlePut() {
+            const addValue = document.getElementById('putValue').value;
+            sendRequest('PUT', 'http://192.168.56.1:50210/index.KMO', 'ADD=' + addValue);
+        }
+
+        function handleDelete() {
+            sendRequest('DELETE', 'http://192.168.56.1:50210/index.KMO');
+        }
+    </script>
+</head>
+<body>
+    <h1>REST Service Demo</h1>
+
+    <div>
+        <h2>GET Request</h2>
+        <button onclick="handleGet()">Send GET</button>
+    </div>
+
+    <div>
+        <h2>POST Request</h2>
+        <input type="number" id="postResult" placeholder="Enter new RESULT value" />
+        <button onclick="handlePost()">Send POST</button>
+    </div>
+
+    <div>
+        <h2>PUT Request</h2>
+        <input type="number" id="putValue" placeholder="Enter value to ADD to stack" />
+        <button onclick="handlePut()">Send PUT</button>
+    </div>
+
+    <div>
+        <h2>DELETE Request</h2>
+        <button onclick="handleDelete()">Send DELETE</button>
+    </div>
+
+    <h3 id="response">Response will appear here</h3>
+</body>
+</html>
