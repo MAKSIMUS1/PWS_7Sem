@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WSKMOModel.student>
+
+<h2>Список студентов</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Действия</th>
+    </tr>
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>@student.id</td>
+            <td>@student.name</td>
+            <td>
+                @using (Html.BeginForm("DeleteStudent", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="id" value="@student.id" />
+                    <input type="submit" value="Удалить студента" />
+                }
+
+                @using (Html.BeginForm("UpdateStudent", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="id" value="@student.id" />
+                    <input type="text" name="name" placeholder="Новое имя" />
+                    <input type="submit" value="Обновить имя" />
+                }
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <th>Предмет</th>
+                        <th>Оценка</th>
+                        <th>Действия</th>
+                    </tr>
+                    @foreach (var note in student.note)
+                    {
+                        <tr>
+                            <td>@note.subject</td>
+                            <td>@note.note1</td>
+                            <td>
+                                @using (Html.BeginForm("DeleteNote", "Home", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="noteId" value="@note.id" />
+                                    <input type="submit" value="Удалить оценку" />
+                                }
+
+                                @using (Html.BeginForm("UpdateNote", "Home", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="noteId" value="@note.id" />
+                                    <input type="text" name="subject" value="@note.subject" />
+                                    <input type="number" name="noteValue" value="@note.note1" min="1" max="5" />
+                                    <input type="submit" value="Обновить оценку" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+
+                <h4>Добавить новую оценку</h4>
+                @using (Html.BeginForm("AddNote", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="studentId" value="@student.id" />
+                    <input type="text" name="subject" placeholder="Предмет" />
+                    <input type="number" name="noteValue" placeholder="Оценка" min="1" max="5" />
+                    <input type="submit" value="Добавить оценку" />
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<h3>Добавить студента</h3>
+@using (Html.BeginForm("AddStudent", "Home", FormMethod.Post))
+{
+    <input type="text" name="name" placeholder="Имя студента" />
+    <input type="submit" value="Добавить студента" />
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <p style="color:red;">@ViewBag.ErrorMessage</p>
+}

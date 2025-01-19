@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "RSS/Atom/JSON Feed Client";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Получение данных студента</h2>
+
+<div>
+    <form id="feedForm">
+        <label for="studentId">ID студента:</label>
+        <input type="text" id="studentId" name="studentId" required />
+
+        <button type="button" onclick="getFeed('json')">JSON</button>
+        <button type="button" onclick="getFeed('rss')">RSS</button>
+        <button type="button" onclick="getFeed('atom')">Atom</button>
+    </form>
+</div>
+
+<div id="result" style="margin-top: 20px;">
+    <h3>Результат:</h3>
+    <pre id="output"></pre>
+</div>
+
+<script>
+    async function getFeed(format) {
+        const studentId = document.getElementById('studentId').value;
+        const output = document.getElementById('output');
+
+        if (!studentId) {
+            alert('Введите ID студента');
+            return;
+        }
+
+        const url = `/Feed/GetFeed?studentId=${encodeURIComponent(studentId)}&format=${format}`;
+
+        try {
+            const response = await fetch(url);
+            const contentType = response.headers.get('Content-Type');
+
+            if (response.ok) {
+                if (contentType.includes('application/json')) {
+                    const json = await response.json();
+                    output.textContent = JSON.stringify(json, null, 4);
+                } else if (contentType.includes('application/xml')) {
+                    const text = await response.text();
+                    output.textContent = formatXml(text);
+                } else {
+                    output.textContent = await response.text();
+                }
+            } else {
+                output.textContent = `Ошибка: ${response.statusText}`;
+            }
+        } catch (error) {
+            output.textContent = `Ошибка: ${error.message}`;
+        }
+    }
+
+    function formatXml(xml) {
+        const formatted = xml.replace(/(>)(<)(\/*)/g, '$1\n$2$3');
+        const lines = formatted.split('\n');
+        let indent = 0;
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].match(/.+<\/\w[^>]*>$/)) {
+                // Do nothing for single-line tags
+            } else if (lines[i].match(/^<\/\w/)) {
+                indent--;
+                lines[i] = '  '.repeat(indent) + lines[i];
+            } else if (lines[i].match(/^<\w[^>]*[^\/]>.*$/)) {
+                lines[i] = '  '.repeat(indent) + lines[i];
+                indent++;
+            } else {
+                lines[i] = '  '.repeat(indent) + lines[i];
+            }
+        }
+        return lines.join('\n');
+    }
+</script>

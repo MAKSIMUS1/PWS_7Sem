@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+   
+
+    <div class="row">
+        <section class="col-md-12" aria-labelledby="jsonRpcExample">
+            <h2 id="jsonRpcExample">JSON-RPC Testing</h2>
+
+            <!-- SetM -->
+            <div class="mb-3">
+                <h3>SetM</h3>
+                <label for="setMKey">Key:</label>
+                <input type="text" id="setMKey" class="form-control">
+                <label for="setMValue">Value:</label>
+                <input type="number" id="setMValue" class="form-control">
+                <button id="sendSetM" class="btn btn-success mt-2">Send SetM</button>
+            </div>
+
+            <!-- GetM -->
+            <div class="mb-3">
+                <h3>GetM</h3>
+                <label for="getMKey">Key:</label>
+                <input type="text" id="getMKey" class="form-control">
+                <button id="sendGetM" class="btn btn-success mt-2">Send GetM</button>
+            </div>
+
+            <!-- AddM -->
+            <div class="mb-3">
+                <h3>AddM</h3>
+                <label for="addMKey">Key:</label>
+                <input type="text" id="addMKey" class="form-control">
+                <label for="addMValue">Value:</label>
+                <input type="number" id="addMValue" class="form-control">
+                <button id="sendAddM" class="btn btn-success mt-2">Send AddM</button>
+            </div>
+
+            <!-- SubM -->
+            <div class="mb-3">
+                <h3>SubM</h3>
+                <label for="subMKey">Key:</label>
+                <input type="text" id="subMKey" class="form-control">
+                <label for="subMValue">Value:</label>
+                <input type="number" id="subMValue" class="form-control">
+                <button id="sendSubM" class="btn btn-success mt-2">Send SubM</button>
+            </div>
+
+            <!-- MulM -->
+            <div class="mb-3">
+                <h3>MulM</h3>
+                <label for="mulMKey">Key:</label>
+                <input type="text" id="mulMKey" class="form-control">
+                <label for="mulMValue">Value:</label>
+                <input type="number" id="mulMValue" class="form-control">
+                <button id="sendMulM" class="btn btn-success mt-2">Send MulM</button>
+            </div>
+
+            <!-- DivM -->
+            <div class="mb-3">
+                <h3>DivM</h3>
+                <label for="divMKey">Key:</label>
+                <input type="text" id="divMKey" class="form-control">
+                <label for="divMValue">Value:</label>
+                <input type="number" id="divMValue" class="form-control">
+                <button id="sendDivM" class="btn btn-success mt-2">Send DivM</button>
+            </div>
+
+            <!-- Response Display -->
+            <div id="response" class="mt-3">
+                <strong>Response:</strong>
+                <pre id="responseData"></pre>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function sendJsonRpcRequest(method, params) {
+            var jsonRpcRequest = {
+                jsonrpc: "2.0",
+                method: method,
+                params: params,
+                id: Date.now()
+            };
+
+            $.ajax({
+                url: "/api/JRService/HandleRequest",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(jsonRpcRequest),
+                success: function (response) {
+                    $("#responseData").text(JSON.stringify(response, null, 2));
+                },
+                error: function (xhr, status, error) {
+                    $("#responseData").text(`Error: ${xhr.responseText || error}`);
+                }
+            });
+        }
+
+        $("#sendSetM").click(function () {
+            var key = $("#setMKey").val();
+            var value = parseInt($("#setMValue").val());
+            sendJsonRpcRequest("SetM", [key, value]);
+        });
+
+        $("#sendGetM").click(function () {
+            var key = $("#getMKey").val();
+            sendJsonRpcRequest("GetM", [key]);
+        });
+
+        $("#sendAddM").click(function () {
+            var key = $("#addMKey").val();
+            var value = parseInt($("#addMValue").val());
+            sendJsonRpcRequest("AddM", [key, value]);
+        });
+
+        $("#sendSubM").click(function () {
+            var key = $("#subMKey").val();
+            var value = parseInt($("#subMValue").val());
+            sendJsonRpcRequest("SubM", [key, value]);
+        });
+
+        $("#sendMulM").click(function () {
+            var key = $("#mulMKey").val();
+            var value = parseInt($("#mulMValue").val());
+            sendJsonRpcRequest("MulM", [key, value]);
+        });
+
+        $("#sendDivM").click(function () {
+            var key = $("#divMKey").val();
+            var value = parseInt($("#divMValue").val());
+            sendJsonRpcRequest("DivM", [key, value]);
+        });
+    });
+</script>

@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student API Interface</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Student API Tester</h1>
+
+        <label for="format">Response Format:</label>
+        <select id="format">
+            <option value="json">JSON</option>
+            <option value="xml">XML</option>
+        </select>
+
+        <div id="forms-section">
+            <section id="get-one-student">
+                <h3>Get One Student</h3>
+                <label for="studentID">Student ID:</label>
+                <input type="number" id="studentID" placeholder="Enter Student ID">
+                <button id="getOneStudent">GET Student by ID</button>
+            </section>
+
+            <section id="get-students">
+                <h3>Get Students</h3>
+                <input type="number" id="limit" placeholder="Limit the number of results">
+                <input type="number" id="offset" placeholder="Skip first N results">
+                <select id="sort">
+                    <option value="ID">ID</option>
+                    <option value="NAME">Name</option>
+                </select>
+                <input type="number" id="minid" placeholder="Filter by min ID">
+                <input type="number" id="maxid" placeholder="Filter by max ID">
+                <input type="text" id="like" placeholder="Filter by name pattern">
+                <input type="text" id="globalike" placeholder="Global like search">
+                <input type="text" id="columns" placeholder="e.g. ID,NAME,PHONE">
+                <button id="getStudents">GET Students</button>
+            </section>
+
+            <section id="add-student">
+                <h3>Add Student</h3>
+                <input type="text" id="postName" placeholder="Student's name">
+                <input type="text" id="postPhone" placeholder="Student's phone">
+                <button id="postStudent">POST Student</button>
+            </section>
+
+            <section id="update-student">
+                <h3>Update Student</h3>
+                <input type="number" id="putID" placeholder="Student's ID">
+                <input type="text" id="putName" placeholder="New name">
+                <input type="text" id="putPhone" placeholder="New phone">
+                <button id="putStudent">PUT Student</button>
+            </section>
+
+            <section id="delete-student">
+                <h3>Delete Student</h3>
+                <input type="number" id="deleteID" placeholder="Student's ID">
+                <button id="deleteStudent">DELETE Student</button>
+            </section>
+        </div>
+
+        <div class="result" id="result">
+            <h4>Result</h4>
+            <pre id="resultData"></pre>
+        </div>
+
+        <table id="student-table" border="1">
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>Phone</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <div id="pagination-buttons"></div>
+
+        <div id="student-links" class="student-links"></div>
+
+        <div id="errorContainer"></div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

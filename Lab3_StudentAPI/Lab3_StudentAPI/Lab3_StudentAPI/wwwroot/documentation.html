@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 20px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-left: 4px solid #007bff;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Students API Documentation</h1>
+        <p>The Students API allows you to manage student records via a simple RESTful interface. Below are the available endpoints:</p>
+
+        <h2>Supported Formats</h2>
+        <p>You can specify the format of the response by appending the format to the URL. The supported formats are <code>json</code> and <code>xml</code>.</p>
+        <p>For example:</p>
+        <ul>
+            <li><code>/api/students.json</code> - Returns data in JSON format.</li>
+            <li><code>/api/students.xml</code> - Returns data in XML format.</li>
+        </ul>
+
+        <h2>GET /api/students</h2>
+        <p>Retrieves a list of students. You can specify the response format (JSON or XML).</p>
+        <pre>
+GET /api/students.{format}
+Content-Type: application/json or application/xml
+Response: 
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "phone": "123-456-7890"
+  },
+  ...
+]
+        </pre>
+
+        <h2>GET /api/students/{id}</h2>
+        <p>Retrieves a single student by their ID. You can specify the response format (JSON or XML).</p>
+        <pre>
+GET /api/students/{id}.{format}
+Content-Type: application/json or application/xml
+Response: 
+{
+  "id": 1,
+  "name": "John Doe",
+  "phone": "123-456-7890"
+}
+        </pre>
+
+        <h2>POST /api/students</h2>
+        <p>Creates a new student record. The response can be in JSON or XML format.</p>
+        <pre>
+POST /api/students
+Content-Type: application/json or application/xml
+Request Body: 
+{
+  "name": "Jane Doe",
+  "phone": "987-654-3210"
+}
+Response: 
+{
+  "id": 2,
+  "name": "Jane Doe",
+  "phone": "987-654-3210"
+}
+        </pre>
+
+        <h2>PUT /api/students/{id}</h2>
+        <p>Updates an existing student record by their ID. The response can be in JSON or XML format.</p>
+        <pre>
+PUT /api/students/{id}.{format}
+Content-Type: application/json or application/xml
+Request Body: 
+{
+  "name": "John Doe",
+  "phone": "123-456-7890"
+}
+Response: 
+{
+  "id": 1,
+  "name": "John Doe",
+  "phone": "123-456-7890"
+}
+        </pre>
+
+        <h2>DELETE /api/students/{id}</h2>
+        <p>Deletes a student record by their ID. The response can be in JSON or XML format.</p>
+        <pre>
+DELETE /api/students/{id}.{format}
+Response: 
+204 No Content
+        </pre>
+
+        <p>For more information, visit our <a href="index.html">API homepage</a>.</p>
+    </div>
+</body>
+</html>
